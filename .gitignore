@@ -13,3 +13,13 @@
 *.db
 *.lock
 .vs/DSA Assignment 1/v17/Browse.VC.db-wal
+x64/Debug/_IsIncrementalBuild
+*.obj
+x64/Debug/DSA Assignment 1.exe
+*.recipe
+*.ilk
+*.log
+*.pdb
+*.tlog
+x64/Debug/DSA Assignment 1.vcxproj.FileListAbsolute.txt
+*.idb

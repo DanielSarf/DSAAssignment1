@@ -23,8 +23,8 @@ enum class criteria
 class CarSpec
 {
 private:
-	std::string carCompanyName;
-	std::string carModel;
+	char carCompanyName[33];
+	char carModel[33];
 	int carYear;
 	carColors carColor;
 	availabilityStatus carAvailabilityStatus;
@@ -49,6 +49,12 @@ public:
 	bool operator==(CarSpec);
 
 	bool isLessThan(CarSpec other, criteria inputCriteria);
+
+	bool isLessThanOrEqual(CarSpec other, criteria inputCriteria);
+
+	bool isGreaterThan(CarSpec other, criteria inputCriteria);
+
+	bool isGreaterThanOrEqual(CarSpec other, criteria inputCriteria);
 
 	//Setter getter functions:
 	void setCarCompanyName(std::string inputCarCompanyName);

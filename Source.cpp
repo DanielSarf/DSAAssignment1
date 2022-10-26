@@ -56,33 +56,52 @@ SLList sortList(SLList list, criteria sortingCriteria, bool ascendingOrder)
 	t1List = sortList(t1List, sortingCriteria, ascendingOrder);
 	t2List = sortList(t2List, sortingCriteria, ascendingOrder);
 
-	for (int i = 0, iT1 = 0, iT2 = 0; i < list.getLength(); i++)
+	if (ascendingOrder)
 	{
-		if ((t1List.findNodePOS(iT1)->getData() <= t2List.findNodePOS(iT2)->getData() && iT1 != t1) || iT2 == t2)
+		for (int i = 0, iT1 = 0, iT2 = 0; i < list.getLength(); i++)
 		{
-			list.replaceNodePOS(i, t1List.findNodePOS(iT1)->getData());
-			iT1++;
+			if ((t1List.findNodePOS(iT1)->getData().isLessThanOrEqual(t2List.findNodePOS(iT2)->getData(), sortingCriteria) && iT1 != t1) || iT2 == t2)
+			{
+				list.replaceNodePOS(i, t1List.findNodePOS(iT1)->getData());
+				iT1++;
+			}
+			else if ((t2List.findNodePOS(iT2)->getData().isLessThanOrEqual(t1List.findNodePOS(iT1)->getData(), sortingCriteria) && iT2 != t2) || iT1 == t1)
+			{
+				list.replaceNodePOS(i, t2List.findNodePOS(iT2)->getData());
+				iT2++;
+			}
 		}
-		else if ((t2List.findNodePOS(iT2) <= t1List.findNodePOS(iT1)->getData() && iT2 != t2) || iT1 == t1)
+	}
+	else
+	{
+		for (int i = 0, iT1 = 0, iT2 = 0; i < list.getLength(); i++)
 		{
-			list.replaceNodePOS(i, t2List.findNodePOS(iT2)->getData());
-			iT2++;
+			if ((t1List.findNodePOS(iT1)->getData().isLessThanOrEqual(t2List.findNodePOS(iT2)->getData(), sortingCriteria) && iT1 != t1) || iT2 == t2)
+			{
+				list.replaceNodePOS(i, t1List.findNodePOS(iT1)->getData());
+				iT1++;
+			}
+			else if ((t2List.findNodePOS(iT2)->getData().isLessThanOrEqual(t1List.findNodePOS(iT1)->getData(), sortingCriteria) && iT2 != t2) || iT1 == t1)
+			{
+				list.replaceNodePOS(i, t2List.findNodePOS(iT2)->getData());
+				iT2++;
+			}
 		}
 	}
 
 	return list;
 }
 
-void displayItemsAscending(SLList list)
+void displayItemsAscending(SLList list, criteria sortingCriteria)
 {
-	SLList sortedList = sortList(list, true);
+	SLList sortedList = sortList(list, sortingCriteria, true);
 
 	sortedList.displayAllADT();
 }
 
-void displayItemsDescending(SLList list)
+void displayItemsDescending(SLList list, criteria sortingCriteria)
 {
-	SLList sortedList = sortList(list, false);
+	SLList sortedList = sortList(list, sortingCriteria, false);
 
 	sortedList.displayAllADT();
 }

@@ -116,49 +116,14 @@ void SLList::importData()
 		return;
 	}
 
-	//This char array is specifically to read data for string data members
-	char currentData[32];
-
-	//CarSpec object will be contructed with the help of data stored in these variables
-	std::string carCompanyName;
-	std::string carModel;
-	int carYear;
-	int carColor;
-	int carAvailabilityStatus;
-	float carConditionScore;
-	float carPriceUSD;
-	float carRentUSD;
-	float rentDiscountPercentage;
-	float priceDiscountPercentage;
-	bool isInsuredByCompany;
-
 	//Will be used to insert nodes into list
 	SLLNode* p;
+	CarSpec currentObject;
 
-	while (inputFile.read(currentData, 32)) //First string for each object is read here so loop breaks at EOF
+	while (inputFile.read(reinterpret_cast<char*>(&currentObject), 97)) //Each object is read here so loop breaks at EOF
 	{
-		//String assigned which is of length 32 for first data member
-		carCompanyName.assign(currentData, 32);
-
-		inputFile.read(currentData, 32);
-		//and now for second data member
-		carModel.assign(currentData, 32);
-
-		//now depending on datatype, certain ammount of Byte(s) are read and stored in respective variables
-		inputFile.read(reinterpret_cast<char*>(&carYear), 4);
-		inputFile.read(reinterpret_cast<char*>(&carColor), 4);
-		inputFile.read(reinterpret_cast<char*>(&carAvailabilityStatus), 4);
-		inputFile.read(reinterpret_cast<char*>(&carConditionScore), 4);
-		inputFile.read(reinterpret_cast<char*>(&carPriceUSD), 4);
-		inputFile.read(reinterpret_cast<char*>(&carRentUSD), 4);
-		inputFile.read(reinterpret_cast<char*>(&rentDiscountPercentage), 4);
-		inputFile.read(reinterpret_cast<char*>(&priceDiscountPercentage), 4);
-		inputFile.read(reinterpret_cast<char*>(&isInsuredByCompany), 1);
-
 		//New node is created with CarSpec Object by the reading of the file above^
-		p = new SLLNode(CarSpec(carCompanyName, carModel, carYear, (carColors)carColor,
-			(availabilityStatus)carAvailabilityStatus, carConditionScore, carPriceUSD, carRentUSD,
-			rentDiscountPercentage, priceDiscountPercentage, isInsuredByCompany));
+		p = new SLLNode(currentObject);
 
 		//To avoid nullptr exception, when tail is nullptr i.e list is empty, this process is skipped 
 		if (length != 0)
@@ -196,66 +161,15 @@ void SLList::exportData()
 
 	//To traverse list, p is initially set to head
 	SLLNode* p = head;
-
-	//These varaiables are filed with data member values to write a fixed number of Byte(s) in binary
-	char carCompanyNameString[32];
-	char carModelString[32];
-	int intValue;
-	float floatValue;
-	bool boolValue;
+	CarSpec currentObject;
 
 	while (p != nullptr) //Traverses till after tail
 	{
-		//CarSpec object is aquired
-		CarSpec data = p->getData();
-
 		//17 Bytes is the Validation, then 32 + 32 + 4 * 8 + 1 Bytes i.e. 97 Bytes is the CarSpec ADT
+		
 		//Convert to binary:
-
-		//String data member 1:
-		strcpy_s(carCompanyNameString, data.getCarCompanyName().c_str());
-
-		//If data member was less than 32 Bytes, the rest of the bytes are set to ' ', which is treated as a delimiter
-		for (int i = data.getCarCompanyName().length(); i < 32; i++)
-		{
-			carCompanyNameString[i] = ' ';
-		}
-
-		//String data member written
-		outputFile.write(carCompanyNameString, 32);
-
-		//Repeat for String data member 2:
-		strcpy_s(carModelString, data.getCarModel().c_str());
-
-		for (int i = data.getCarModel().length(); i < 32; i++)
-		{
-			carModelString[i] = ' ';
-		}
-
-		outputFile.write(carModelString, 32);
-
-		//intValue is set to next remaining int data member after each write 
-		intValue = data.getCarYear();
-		//Write int value in binary taking up 4 Byte(s)
-		outputFile.write(reinterpret_cast<char*>(&intValue), 4);
-		intValue = (int)data.getCarColor();
-		outputFile.write(reinterpret_cast<char*>(&intValue), 4);
-		intValue = (int)data.getCarAvailabilityStatus();
-		outputFile.write(reinterpret_cast<char*>(&intValue), 4);
-		//Now with float data members
-		floatValue = data.getCarConditionScore();
-		outputFile.write(reinterpret_cast<char*>(&floatValue), 4);
-		floatValue = data.getCarPriceUSD();
-		outputFile.write(reinterpret_cast<char*>(&floatValue), 4);
-		floatValue = data.getCarRentUSD();
-		outputFile.write(reinterpret_cast<char*>(&floatValue), 4);
-		floatValue = data.getRentDiscountPercentage();
-		outputFile.write(reinterpret_cast<char*>(&floatValue), 4);
-		floatValue = data.getPriceDiscountPercentage();
-		outputFile.write(reinterpret_cast<char*>(&floatValue), 4);
-		//Now with bool data member
-		boolValue = data.getIsInsuredByCompany();
-		outputFile.write(reinterpret_cast<char*>(&boolValue), 1);
+		currentObject = p->getData();
+		outputFile.write(reinterpret_cast<char*>(&currentObject), 97);
 
 		//Traverse further
 		p = p->getNext();

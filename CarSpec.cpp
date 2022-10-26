@@ -4,27 +4,51 @@ CarSpec::CarSpec(std::string inputCarCompanyName, std::string inputCarModel, int
 	availabilityStatus inputCarAvailabilityStatus, float inputCarConditionScore, float inputCarPriceUSD, float inputCarRentUSD,
 	float inputRentDiscountPercentage, float inputPriceDiscountPercentage, bool inputIsInsuredByCompany)
 {
-	//Checks if input strings have more than 32 characters
+	//Checks if input string has more than 32 characters
 	if (inputCarCompanyName.length() > 32)
 	{
-		std::cerr << "Warning: Maximum of 32 characters allowed for Car Company Name.";
-		
-		//Cuts of characters after 32 characters
-		carCompanyName.assign(inputCarCompanyName, 32);
-	}
-	
-	carCompanyName.assign(inputCarCompanyName);
+		std::cerr << "Warning: Maximum of 32 characters allowed for Car Company Name\n";
 
-	//Checks if input strings have more than 32 characters
+		//Cuts of characters after 32 characters
+		strcpy_s(carCompanyName, inputCarCompanyName.substr(0, 32).c_str());
+	}
+	else
+	{
+		//If input string has 32 characters or less
+		strcpy_s(carCompanyName, inputCarCompanyName.c_str());
+
+		//Fills remaining characters with upto 32 ' ' (to be used as a  delimiter) if characters are less than 32
+		for (int i = inputCarCompanyName.length(); i < 32; i++)
+		{
+			carCompanyName[i] = ' ';
+		}
+
+		//Sets last char to null character
+		carCompanyName[32] = '\0';
+	}
+
+	//Checks if input string has more than 32 characters
 	if (inputCarModel.length() > 32)
 	{
-		std::cerr << "Warning: Maximum of 32 characters allowed for Car Model.";
-		
-		//Cuts of characters after 32 characters
-		carModel.assign(inputCarModel, 32);
-	}
+		std::cerr << "Warning: Maximum of 32 characters allowed for Car Model\n";
 
-	carModel.assign(inputCarModel);
+		//Cuts of characters after 32 characters
+		strcpy_s(carModel, (inputCarModel.substr(0, 32).c_str()));
+	}
+	else
+	{
+		//If input string has 32 characters or less
+		strcpy_s(carModel, inputCarModel.c_str());
+
+		//Fills remaining characters with upto 32 ' ' (to be used as a  delimiter) if characters are less than 32
+		for (int i = inputCarModel.length(); i < 32; i++)
+		{
+			carModel[i] = ' ';
+		}
+
+		//Sets last char to null character
+		carModel[32] = '\0';
+	}
 
 	carYear = inputCarYear;
 	carColor = inputCarColor;
@@ -41,12 +65,12 @@ bool CarSpec::operator==(CarSpec other)
 {
 	//Goes through each data memember to check if they are equal but if data memeber is null it ignores and still returns true 
 
-	if (!carCompanyName.empty() && carCompanyName.compare(other.carCompanyName) != 0)
+	if (!(strlen(carCompanyName) == 0) && strcmp(carCompanyName, other.carCompanyName) != 0)
 	{
 		return false;
 	}
 
-	if (!carModel.empty() && carModel.compare(other.carModel) != 0)
+	if (!(strlen(carModel) == 0) && strcmp(carModel, other.carModel) != 0)
 	{
 		return false;
 	}
@@ -103,12 +127,12 @@ bool CarSpec::isLessThan(CarSpec other, criteria inputCriteria)
 {
 	if (inputCriteria == criteria::carCompanyName)
 	{
-		return (carCompanyName.compare(other.carCompanyName) < 0);
+		return (strcmp(carCompanyName, other.carCompanyName) < 0);
 	}
 
 	if (inputCriteria == criteria::carModel)
 	{
-		return (carModel.compare(other.carModel) < 0);
+		return (strcmp(carModel, other.carModel) < 0);
 	}
 
 	if (inputCriteria == criteria::carYear)
@@ -154,42 +178,97 @@ bool CarSpec::isLessThan(CarSpec other, criteria inputCriteria)
 	exit(0);
 }
 
+bool CarSpec::isLessThanOrEqual(CarSpec other, criteria inputCriteria)
+{
+	return (isLessThan(other, inputCriteria) || (*this) == other);
+}
+
+bool CarSpec::isGreaterThan(CarSpec other, criteria inputCriteria)
+{
+	return (other.isLessThan(*this, inputCriteria));
+}
+
+bool CarSpec::isGreaterThanOrEqual(CarSpec other, criteria inputCriteria)
+{
+	return (isGreaterThan(other, inputCriteria) || (*this) == other);
+}
+
 void CarSpec::setCarCompanyName(std::string inputCarCompanyName)
 {
-	//Checks if input strings have more than 32 characters
+	//Checks if input string has more than 32 characters
 	if (inputCarCompanyName.length() > 32)
 	{
-		std::cerr << "Warning: Maximum of 32 characters allowed for Car Company Name.";
-		
-		//Cuts of characters after 32 characters
-		carCompanyName.assign(inputCarCompanyName, 32);
-	}
+		std::cerr << "Warning: Maximum of 32 characters allowed for Car Company Name\n";
 
-	carCompanyName.assign(inputCarCompanyName);
+		//Cuts of characters after 32 characters
+		strcpy_s(carCompanyName, inputCarCompanyName.substr(0, 32).c_str());
+	}
+	else
+	{
+		//If input string has 32 characters or less
+		strcpy_s(carCompanyName, inputCarCompanyName.c_str());
+
+		//Fills remaining characters with upto 32 ' ' (to be used as a  delimiter) if characters are less than 32
+		for (int i = inputCarCompanyName.length(); i < 32; i++)
+		{
+			carCompanyName[i] = ' ';
+		}
+
+		//Sets last char to null character
+		carCompanyName[32] = '\0';
+	}
 }
 
 std::string CarSpec::getCarCompanyName()
 {
-	return carCompanyName;
+	for (int indexOfLastSpaceDelimiter = 31; indexOfLastSpaceDelimiter >= 0; indexOfLastSpaceDelimiter--)
+	{
+		if (carCompanyName[indexOfLastSpaceDelimiter] != ' ')
+		{
+			return (std::string(carCompanyName).substr(0, indexOfLastSpaceDelimiter + 1));
+		}
+	}
+
+	return std::string(carCompanyName);
 }
 
 void CarSpec::setCarModel(std::string inputCarModel)
 {
-	//Checks if input strings have more than 32 characters
+	//Checks if input string has more than 32 characters
 	if (inputCarModel.length() > 32)
 	{
-		std::cerr << "Warning: Maximum of 32 characters allowed for Car Model.";
+		std::cerr << "Warning: Maximum of 32 characters allowed for Car Model\n";
 
 		//Cuts of characters after 32 characters
-		carModel.assign(inputCarModel, 32);
+		strcpy_s(carModel, (inputCarModel.substr(0, 32).c_str()));
 	}
+	else
+	{
+		//If input string has 32 characters or less
+		strcpy_s(carModel, inputCarModel.c_str());
 
-	carModel.assign(inputCarModel);
+		//Fills remaining characters with upto 32 ' ' (to be used as a  delimiter) if characters are less than 32
+		for (int i = inputCarModel.length(); i < 32; i++)
+		{
+			carModel[i] = ' ';
+		}
+
+		//Sets last char to null character
+		carModel[32] = '\0';
+	}
 }
 
 std::string CarSpec::getCarModel()
 {
-	return carModel;
+	for (int indexOfLastSpaceDelimiter = 31; indexOfLastSpaceDelimiter >= 0; indexOfLastSpaceDelimiter--)
+	{
+		if (carModel[indexOfLastSpaceDelimiter] != ' ')
+		{
+			return (std::string(carModel).substr(0, indexOfLastSpaceDelimiter + 1));
+		}
+	}
+
+	return std::string(carModel);
 }
 
 void CarSpec::setCarYear(int inputCarYear)
@@ -342,8 +421,8 @@ void CarSpec::display()
 {
 	//to_string functions are necessary for ternary operator
 
-	std::cout << "Car company name: " << (carCompanyName == "" ? "N/A" : carCompanyName);
-	std::cout << "\nCar model: " << (carModel == "" ? "N/A" : carModel);
+	std::cout << "Car company name: " << (getCarCompanyName() == "" ? "N/A" : getCarCompanyName());
+	std::cout << "\nCar model: " << (getCarModel() == "" ? "N/A" : getCarModel());
 	std::cout << "\nCar year: " << (carYear == NULL ? "N/A" : std::to_string(carYear));
 	std::cout << "\nCar color: " << carColorToString();
 	std::cout << "\nCar availability status: " << availabilityStatusToString();
