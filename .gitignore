@@ -11,3 +11,4 @@
 .vs/DSA Assignment 1/v17/Browse.VC.db
 *.db-shm
 *.db
+*.lock
