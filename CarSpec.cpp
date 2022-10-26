@@ -414,11 +414,11 @@ bool CarSpec::isDataMemberEqual(std::string matchWith, criteria inputCriteria)
 {
 	if (inputCriteria == criteria::carCompanyName)
 	{
-		return (strcmp(carCompanyName, other.carCompanyName) == 0);
+		return (strcmp(carCompanyName, matchWith.c_str()) == 0);
 	}
 	else if (inputCriteria == criteria::carModel)
 	{
-		return (strcmp(carModel, other.carModel) == 0);
+		return (strcmp(carModel, matchWith.c_str()) == 0);
 	}
 
 	std::cerr << "Incorrect criteria\n";

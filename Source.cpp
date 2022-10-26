@@ -66,7 +66,7 @@ int countOfCriteria(SLList& list, string matchWith, criteria countCriteria) //DO
 		p = p->getNext();
 	}
 
-	cout << "Count is: " << count;
+	return count;
 }
 
 int countOfCriteria(SLList& list, int matchWith, criteria countCriteria) //DONE
@@ -89,7 +89,7 @@ int countOfCriteria(SLList& list, int matchWith, criteria countCriteria) //DONE
 		p = p->getNext();
 	}
 
-	cout << "Count is: " << count;
+	return count;
 }
 
 int countOfCriteria(SLList& list, carColors matchWith, criteria countCriteria) //DONE
@@ -112,7 +112,7 @@ int countOfCriteria(SLList& list, carColors matchWith, criteria countCriteria) /
 		p = p->getNext();
 	}
 
-	cout << "Count is: " << count;
+	return count;
 }
 
 int countOfCriteria(SLList& list, availabilityStatus matchWith, criteria countCriteria) //DONE
@@ -135,7 +135,7 @@ int countOfCriteria(SLList& list, availabilityStatus matchWith, criteria countCr
 		p = p->getNext();
 	}
 
-	cout << "Count is: " << count;
+	return count;
 }
 
 int countOfCriteria(SLList& list, float matchWith, criteria countCriteria) //DONE
@@ -158,7 +158,7 @@ int countOfCriteria(SLList& list, float matchWith, criteria countCriteria) //DON
 		p = p->getNext();
 	}
 
-	cout << "Count is: " << count;
+	return count;
 }
 
 int countOfCriteria(SLList& list, bool matchWith, criteria countCriteria) //DONE
@@ -177,30 +177,43 @@ int countOfCriteria(SLList& list, bool matchWith, criteria countCriteria) //DONE
 		p = p->getNext();
 	}
 
-	cout << "Count is: " << count;
+	return count;
 }
 
 void sortList(SLList &list, criteria sortingCriteria, bool ascendingOrder)
 {
-	
+	//Alright boys we'll have to think in powers of 2 i.e. 1, 2, 4, 8 etc.
+
+	int listLength = list.getLength();
+
+	if (listLength <= 1)
+	{
+		return;
+	}
+
+	int stepSize = 1;
+	while (stepSize < listLength)
+	{
+
+	}
 }
 
 void displayItemsAscending(SLList &list, criteria sortingCriteria)
 {
+	SLList tempList;
 
+	sortList(tempList, sortingCriteria, true);
 
-	sortList(list, sortingCriteria, true);
-
-	list.displayAllADT();
+	tempList.displayAllADT();
 }
 
 void displayItemsDescending(SLList &list, criteria sortingCriteria)
 {
+	SLList tempList;
 
+	sortList(tempList, sortingCriteria, false);
 
-	sortList(list, sortingCriteria, false);
-
-	list.displayAllADT();
+	tempList.displayAllADT();
 }
 
 void populateList(SLList& list, int numberOfObjects)

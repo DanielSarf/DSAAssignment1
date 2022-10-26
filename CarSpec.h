@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <cstring>
 #include <string>
 
 enum class carColors
@@ -92,7 +93,12 @@ public:
 	void setIsInsuredByCompany(bool inputIsInsuredByCompany);
 	bool getIsInsuredByCompany();
 
-	bool isDataMemberEqual(criteria inputCriteria);
+	bool isDataMemberEqual(std::string matchWith, criteria inputCriteria);
+	bool isDataMemberEqual(int matchWith, criteria inputCriteria);
+	bool isDataMemberEqual(carColors matchWith, criteria inputCriteria);
+	bool isDataMemberEqual(availabilityStatus matchWith, criteria inputCriteria);
+	bool isDataMemberEqual(float matchWith, criteria inputCriteria);
+	bool isDataMemberEqual(bool matchWith, criteria inputCriteria);
 
 	//Display function outputs to console in a neat format
 	void display();
