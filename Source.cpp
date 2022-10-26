@@ -7,103 +7,200 @@ using namespace std;
 
 int randomNumber(int min, int max)
 {
-
 	return min + rand() % (max - min + 1);
 }
 
-SLList contructObject()
+void displayCarsOfCriteria(SLList &list, criteria displayCriteria)
 {
-	return SLList("file.bin");
-}
+	//Goes through list and displays 
 
-SLList contructSearchObject()
-{
-	return SLList("file.bin");
-}
 
-void displayCarsOfType(CarSpec searchObject, SLList* list)
-{
+	SLLNode* p = list.getHead();
 
-}
+	int counter = 0;
 
-int returnCountOfList(SLList* list)
-{
-	return 0;
-}
-
-SLList sortList(SLList list, criteria sortingCriteria, bool ascendingOrder)
-{
-	if (list.getLength() == 1)
+	while (p != nullptr)
 	{
-		return list;
+		/*if(p->getData().isEqualCRITERIA())
+		std::cout << "Data at Position " << counter << ":\n";
+		p->getData().display();
+		std::cout << "\n";*/
+
+		counter++;
+		p = p->getNext();
+	}
+}
+
+int returnCountOfList(SLList &list) //DONE
+{
+	SLLNode* p = list.getHead();
+
+	int count = 0;
+
+	while (p != nullptr)
+	{
+		count++;
+		p = p->getNext();
 	}
 
-	int t1 = list.getLength() / 2;
-	int t2 = list.getLength() - t1;
+	return count;
+}
 
-	SLList t1List, t2List;
+int countOfCriteria(SLList& list, string matchWith, criteria countCriteria) //DONE
+{
+	SLLNode* p = list.getHead();
 
-	for (int i = 0; i < t1; i++)
+	int count = 0;
+
+	CarSpec data;
+
+	while (p != nullptr)
 	{
-		t1List.insertEnd(list.findNodePOS(i)->getData());
-	}
+		data = p->getData();
 
-	for (int i = t1; i < list.getLength(); i++)
-	{
-		t1List.insertEnd(list.findNodePOS(i)->getData());
-	}
-
-	t1List = sortList(t1List, sortingCriteria, ascendingOrder);
-	t2List = sortList(t2List, sortingCriteria, ascendingOrder);
-
-	if (ascendingOrder)
-	{
-		for (int i = 0, iT1 = 0, iT2 = 0; i < list.getLength(); i++)
+		if (p->getData().isDataMemberEqual(matchWith, countCriteria))
 		{
-			if ((t1List.findNodePOS(iT1)->getData().isLessThanOrEqual(t2List.findNodePOS(iT2)->getData(), sortingCriteria) && iT1 != t1) || iT2 == t2)
-			{
-				list.replaceNodePOS(i, t1List.findNodePOS(iT1)->getData());
-				iT1++;
-			}
-			else if ((t2List.findNodePOS(iT2)->getData().isLessThanOrEqual(t1List.findNodePOS(iT1)->getData(), sortingCriteria) && iT2 != t2) || iT1 == t1)
-			{
-				list.replaceNodePOS(i, t2List.findNodePOS(iT2)->getData());
-				iT2++;
-			}
+			count++;
 		}
+
+		p = p->getNext();
 	}
-	else
+
+	cout << "Count is: " << count;
+}
+
+int countOfCriteria(SLList& list, int matchWith, criteria countCriteria) //DONE
+{
+	SLLNode* p = list.getHead();
+
+	int count = 0;
+
+	CarSpec data;
+
+	while (p != nullptr)
 	{
-		for (int i = 0, iT1 = 0, iT2 = 0; i < list.getLength(); i++)
+		data = p->getData();
+
+		if (p->getData().isDataMemberEqual(matchWith, countCriteria))
 		{
-			if ((t1List.findNodePOS(iT1)->getData().isLessThanOrEqual(t2List.findNodePOS(iT2)->getData(), sortingCriteria) && iT1 != t1) || iT2 == t2)
-			{
-				list.replaceNodePOS(i, t1List.findNodePOS(iT1)->getData());
-				iT1++;
-			}
-			else if ((t2List.findNodePOS(iT2)->getData().isLessThanOrEqual(t1List.findNodePOS(iT1)->getData(), sortingCriteria) && iT2 != t2) || iT1 == t1)
-			{
-				list.replaceNodePOS(i, t2List.findNodePOS(iT2)->getData());
-				iT2++;
-			}
+			count++;
 		}
+
+		p = p->getNext();
 	}
 
-	return list;
+	cout << "Count is: " << count;
 }
 
-void displayItemsAscending(SLList list, criteria sortingCriteria)
+int countOfCriteria(SLList& list, carColors matchWith, criteria countCriteria) //DONE
 {
-	SLList sortedList = sortList(list, sortingCriteria, true);
+	SLLNode* p = list.getHead();
 
-	sortedList.displayAllADT();
+	int count = 0;
+
+	CarSpec data;
+
+	while (p != nullptr)
+	{
+		data = p->getData();
+
+		if (p->getData().isDataMemberEqual(matchWith, countCriteria))
+		{
+			count++;
+		}
+
+		p = p->getNext();
+	}
+
+	cout << "Count is: " << count;
 }
 
-void displayItemsDescending(SLList list, criteria sortingCriteria)
+int countOfCriteria(SLList& list, availabilityStatus matchWith, criteria countCriteria) //DONE
 {
-	SLList sortedList = sortList(list, sortingCriteria, false);
+	SLLNode* p = list.getHead();
 
-	sortedList.displayAllADT();
+	int count = 0;
+
+	CarSpec data;
+
+	while (p != nullptr)
+	{
+		data = p->getData();
+
+		if (p->getData().isDataMemberEqual(matchWith, countCriteria))
+		{
+			count++;
+		}
+
+		p = p->getNext();
+	}
+
+	cout << "Count is: " << count;
+}
+
+int countOfCriteria(SLList& list, float matchWith, criteria countCriteria) //DONE
+{
+	SLLNode* p = list.getHead();
+
+	int count = 0;
+
+	CarSpec data;
+
+	while (p != nullptr)
+	{
+		data = p->getData();
+
+		if (p->getData().isDataMemberEqual(matchWith, countCriteria))
+		{
+			count++;
+		}
+
+		p = p->getNext();
+	}
+
+	cout << "Count is: " << count;
+}
+
+int countOfCriteria(SLList& list, bool matchWith, criteria countCriteria) //DONE
+{
+	SLLNode* p = list.getHead();
+
+	int count = 0;
+
+	while (p != nullptr)
+	{
+		if (p->getData().isDataMemberEqual(matchWith, countCriteria))
+		{
+			count++;
+		}
+
+		p = p->getNext();
+	}
+
+	cout << "Count is: " << count;
+}
+
+void sortList(SLList &list, criteria sortingCriteria, bool ascendingOrder)
+{
+	
+}
+
+void displayItemsAscending(SLList &list, criteria sortingCriteria)
+{
+
+
+	sortList(list, sortingCriteria, true);
+
+	list.displayAllADT();
+}
+
+void displayItemsDescending(SLList &list, criteria sortingCriteria)
+{
+
+
+	sortList(list, sortingCriteria, false);
+
+	list.displayAllADT();
 }
 
 void populateList(SLList& list, int numberOfObjects)
@@ -231,11 +328,11 @@ int main()
 {
 	srand((unsigned int)time(NULL));
 
-	SLList Test("file.bin");
+	SLList Test;
 
 	populateList(Test, 100);
 
-	Test.displayAllADT();
+	displayItemsAscending(Test, criteria::carYear);
 
 	return 0;
 }

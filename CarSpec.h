@@ -16,7 +16,7 @@ enum class availabilityStatus
 enum class criteria
 {
 	carCompanyName, carModel, carYear, carColor, availabilityStatus, carConditionScore,
-	carPriceUSD, carRentUSD, rentDiscountPercentage, priceDiscountPercentage
+	carPriceUSD, carRentUSD, rentDiscountPercentage, priceDiscountPercentage, isInsuredByCompany
 };
 
 //This ADT is meant to store Car information typically found in Car Dealerships
@@ -47,6 +47,8 @@ public:
 
 	//Customized operator equality operator that ignores missing information (useful to display objects of a certain type)
 	bool operator==(CarSpec);
+
+	bool isEqualCRITERIA(CarSpec other, criteria inputCriteria);
 
 	bool isLessThan(CarSpec other, criteria inputCriteria);
 
@@ -89,6 +91,8 @@ public:
 
 	void setIsInsuredByCompany(bool inputIsInsuredByCompany);
 	bool getIsInsuredByCompany();
+
+	bool isDataMemberEqual(criteria inputCriteria);
 
 	//Display function outputs to console in a neat format
 	void display();

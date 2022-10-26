@@ -65,62 +65,114 @@ bool CarSpec::operator==(CarSpec other)
 {
 	//Goes through each data memember to check if they are equal but if data memeber is null it ignores and still returns true 
 
-	if (!(strlen(carCompanyName) == 0) && strcmp(carCompanyName, other.carCompanyName) != 0)
+	if (strcmp(carCompanyName, other.carCompanyName) != 0)
 	{
 		return false;
 	}
 
-	if (!(strlen(carModel) == 0) && strcmp(carModel, other.carModel) != 0)
+	if (strcmp(carModel, other.carModel) != 0)
 	{
 		return false;
 	}
 
-	if (carYear != NULL && carYear != other.carYear)
+	if (carYear != other.carYear)
 	{
 		return false;
 	}
 
-	if (carColor != carColors::NA && carColor != other.carColor)
+	if (carColor != other.carColor)
 	{
 		return false;
 	}
 
-	if (carAvailabilityStatus != availabilityStatus::NA && carAvailabilityStatus != other.carAvailabilityStatus)
+	if (carAvailabilityStatus != other.carAvailabilityStatus)
 	{
 		return false;
 	}
 
-	if (carConditionScore != NULL && carConditionScore != other.carConditionScore)
+	if (carConditionScore != other.carConditionScore)
 	{
 		return false;
 	}
 
-	if (carPriceUSD != NULL && carPriceUSD != other.carPriceUSD)
+	if (carPriceUSD != other.carPriceUSD)
 	{
 		return false;
 	}
 
-	if (carRentUSD != NULL && carRentUSD != other.carRentUSD)
+	if (carRentUSD != other.carRentUSD)
 	{
 		return false;
 	}
 
-	if (rentDiscountPercentage != NULL && rentDiscountPercentage != other.rentDiscountPercentage)
+	if (rentDiscountPercentage != other.rentDiscountPercentage)
 	{
 		return false;
 	}
 
-	if (priceDiscountPercentage != NULL && priceDiscountPercentage != other.priceDiscountPercentage)
+	if (priceDiscountPercentage != other.priceDiscountPercentage)
 	{
 		return false;
 	}
 
-	if (isInsuredByCompany != NULL && isInsuredByCompany != other.isInsuredByCompany)
+	if (isInsuredByCompany != other.isInsuredByCompany)
 	{
 		return false;
 	}
 
 	return true;
+}
+
+bool CarSpec::isEqualCRITERIA(CarSpec other, criteria inputCriteria)
+{
+	if (inputCriteria == criteria::carCompanyName)
+	{
+		return (strcmp(carCompanyName, other.carCompanyName) == 0);
+	}
+	else if (inputCriteria == criteria::carModel)
+	{
+		return (strcmp(carModel, other.carModel) == 0);
+	}
+	else if (inputCriteria == criteria::carYear)
+	{
+		return (carYear == other.carYear);
+	}
+	else if (inputCriteria == criteria::carColor)
+	{
+		return (carColor == other.carColor);
+	}
+	else if (inputCriteria == criteria::availabilityStatus)
+	{
+		return (carAvailabilityStatus == other.carAvailabilityStatus);
+	}
+	else if (inputCriteria == criteria::carConditionScore)
+	{
+		return (carConditionScore == other.carConditionScore);
+	}
+	else if (inputCriteria == criteria::carPriceUSD)
+	{
+		return (carPriceUSD == other.carPriceUSD);
+	}
+	else if (inputCriteria == criteria::carRentUSD)
+	{
+		return (carRentUSD == other.carRentUSD);
+	}
+	else if (inputCriteria == criteria::rentDiscountPercentage)
+	{
+		return (rentDiscountPercentage == other.rentDiscountPercentage);
+	}
+	else if (inputCriteria == criteria::priceDiscountPercentage)
+	{
+		return (priceDiscountPercentage == other.priceDiscountPercentage);
+	}
+	else if (inputCriteria == criteria::isInsuredByCompany)
+	{
+		return (isInsuredByCompany == other.isInsuredByCompany);
+	}
+
+	std::cerr << "Incorrect criteria\n";
+
+	exit(0);
 }
 
 bool CarSpec::isLessThan(CarSpec other, criteria inputCriteria)
@@ -129,58 +181,55 @@ bool CarSpec::isLessThan(CarSpec other, criteria inputCriteria)
 	{
 		return (strcmp(carCompanyName, other.carCompanyName) < 0);
 	}
-
-	if (inputCriteria == criteria::carModel)
+	else if (inputCriteria == criteria::carModel)
 	{
 		return (strcmp(carModel, other.carModel) < 0);
 	}
-
-	if (inputCriteria == criteria::carYear)
+	else if (inputCriteria == criteria::carYear)
 	{
 		return (carYear < other.carYear);
 	}
-
-	if (inputCriteria == criteria::carColor)
+	else if (inputCriteria == criteria::carColor)
 	{
 		return (carColor < other.carColor);
 	}
-
-	if (inputCriteria == criteria::availabilityStatus)
+	else if (inputCriteria == criteria::availabilityStatus)
 	{
 		return (carAvailabilityStatus < other.carAvailabilityStatus);
 	}
-
-	if (inputCriteria == criteria::carConditionScore)
+	else if (inputCriteria == criteria::carConditionScore)
 	{
 		return (carConditionScore < other.carConditionScore);
 	}
-
-	if (inputCriteria == criteria::carPriceUSD)
+	else if (inputCriteria == criteria::carPriceUSD)
 	{
 		return (carPriceUSD < other.carPriceUSD);
 	}
-
-	if (inputCriteria == criteria::carRentUSD)
+	else if (inputCriteria == criteria::carRentUSD)
 	{
 		return (carRentUSD < other.carRentUSD);
 	}
-
-	if (inputCriteria == criteria::rentDiscountPercentage)
+	else if (inputCriteria == criteria::rentDiscountPercentage)
 	{
 		return (rentDiscountPercentage < other.rentDiscountPercentage);
 	}
-
-	if (inputCriteria == criteria::priceDiscountPercentage)
+	else if (inputCriteria == criteria::priceDiscountPercentage)
 	{
 		return (priceDiscountPercentage < other.priceDiscountPercentage);
 	}
+	else if (inputCriteria == criteria::isInsuredByCompany)
+	{
+		return (isInsuredByCompany < other.isInsuredByCompany);
+	}
+	
+	std::cerr << "Incorrect criteria\n";
 
 	exit(0);
 }
 
 bool CarSpec::isLessThanOrEqual(CarSpec other, criteria inputCriteria)
 {
-	return (isLessThan(other, inputCriteria) || (*this) == other);
+	return (isLessThan(other, inputCriteria) || isEqualCRITERIA(other, inputCriteria));
 }
 
 bool CarSpec::isGreaterThan(CarSpec other, criteria inputCriteria)
@@ -190,7 +239,7 @@ bool CarSpec::isGreaterThan(CarSpec other, criteria inputCriteria)
 
 bool CarSpec::isGreaterThanOrEqual(CarSpec other, criteria inputCriteria)
 {
-	return (isGreaterThan(other, inputCriteria) || (*this) == other);
+	return (isGreaterThan(other, inputCriteria) || isEqualCRITERIA(other, inputCriteria));
 }
 
 void CarSpec::setCarCompanyName(std::string inputCarCompanyName)
@@ -359,6 +408,98 @@ void CarSpec::setIsInsuredByCompany(bool inputIsInsuredByCompany)
 bool CarSpec::getIsInsuredByCompany()
 {
 	return isInsuredByCompany;
+}
+
+bool CarSpec::isDataMemberEqual(std::string matchWith, criteria inputCriteria)
+{
+	if (inputCriteria == criteria::carCompanyName)
+	{
+		return (strcmp(carCompanyName, other.carCompanyName) == 0);
+	}
+	else if (inputCriteria == criteria::carModel)
+	{
+		return (strcmp(carModel, other.carModel) == 0);
+	}
+
+	std::cerr << "Incorrect criteria\n";
+
+	exit(0);
+}
+
+bool CarSpec::isDataMemberEqual(int matchWith, criteria inputCriteria)
+{
+	if (inputCriteria == criteria::carYear)
+	{
+		return (carYear == matchWith);
+	}
+
+	std::cerr << "Incorrect criteria\n";
+
+	exit(0);
+}
+
+bool CarSpec::isDataMemberEqual(carColors matchWith, criteria inputCriteria)
+{
+	if (inputCriteria == criteria::carColor)
+	{
+		return (carColor == matchWith);
+	}
+
+	std::cerr << "Incorrect criteria\n";
+
+	exit(0);
+}
+
+bool CarSpec::isDataMemberEqual(availabilityStatus matchWith, criteria inputCriteria)
+{
+	if (inputCriteria == criteria::availabilityStatus)
+	{
+		return (carAvailabilityStatus == matchWith);
+	}
+
+	std::cerr << "Incorrect criteria\n";
+
+	exit(0);
+}
+
+bool CarSpec::isDataMemberEqual(float matchWith, criteria inputCriteria)
+{
+	if (inputCriteria == criteria::carConditionScore)
+	{
+		return (carConditionScore == matchWith);
+	}
+	else if (inputCriteria == criteria::carPriceUSD)
+	{
+		return (carPriceUSD == matchWith);
+	}
+	else if (inputCriteria == criteria::carRentUSD)
+	{
+		return (carRentUSD == matchWith);
+	}
+	else if (inputCriteria == criteria::rentDiscountPercentage)
+	{
+		return (rentDiscountPercentage == matchWith);
+	}
+	else if (inputCriteria == criteria::priceDiscountPercentage)
+	{
+		return (priceDiscountPercentage == matchWith);
+	}
+
+	std::cerr << "Incorrect criteria\n";
+
+	exit(0);
+}
+
+bool CarSpec::isDataMemberEqual(bool matchWith, criteria inputCriteria)
+{
+	if (inputCriteria == criteria::isInsuredByCompany)
+	{
+		return (isInsuredByCompany == matchWith);
+	}
+
+	std::cerr << "Incorrect criteria\n";
+
+	exit(0);
 }
 
 std::string CarSpec::carColorToString()
