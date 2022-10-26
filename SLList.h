@@ -83,9 +83,11 @@ public:
 	void deleteNodePOS(int POS);
 	//Searches by data (stops after first find), to delete the node it found
 	void deleteNodeDATA(CarSpec searchData);
+
+	void deleteFile();
 	
 	//Empties list by deleting each node, sets head and tail to nullptr and sets length to 0
-	void emptyList();
+	void emptyListWithoutChangesToFile();
 	
 	//Calls emptyList and then deletes file
 	void emptyListAndFile();

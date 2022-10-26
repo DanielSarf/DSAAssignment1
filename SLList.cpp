@@ -61,6 +61,12 @@ int SLList::getLength()
 void  SLList::setHead(SLLNode* inputHead)
 {
 	head = inputHead;
+
+	//Export changes to file
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 SLLNode* SLList::getHead()
@@ -71,6 +77,12 @@ SLLNode* SLList::getHead()
 void  SLList::setTail(SLLNode* inputTail)
 {
 	tail = inputTail;
+
+	//Export changes to file
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 SLLNode* SLList::getTail()
@@ -268,7 +280,10 @@ void SLList::insertBeg(CarSpec inputData)
 	}
 
 	//Export changes to file
-	if (!fileName.empty()) { exportData(); }
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 void SLList::insertBeforePOS(int POS, CarSpec inputData)
@@ -302,7 +317,10 @@ void SLList::insertBeforePOS(int POS, CarSpec inputData)
 	length++;
 
 	//Export changes to file
-	if (!fileName.empty()) { exportData(); }
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 void SLList::insertBeforeDATA(CarSpec searchData, CarSpec inputData)
@@ -327,7 +345,10 @@ void SLList::insertBeforeDATA(CarSpec searchData, CarSpec inputData)
 	std::cerr << "Data not present in List. Position not found\n";
 
 	//Export changes to file
-	if (!fileName.empty()) { exportData(); }
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 void SLList::insertAfterNODE(SLLNode* inputNode, CarSpec inputData)
@@ -346,7 +367,10 @@ void SLList::insertAfterNODE(SLLNode* inputNode, CarSpec inputData)
 	length++;
 
 	//Export changes to file
-	if (!fileName.empty()) { exportData(); }
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 void SLList::insertAfterPOS(int POS, CarSpec inputData)
@@ -375,7 +399,10 @@ void SLList::insertAfterPOS(int POS, CarSpec inputData)
 	length++;
 
 	//Export changes to file
-	if (!fileName.empty()) { exportData(); }
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 void SLList::insertAfterDATA(CarSpec searchData, CarSpec inputData)
@@ -402,7 +429,10 @@ void SLList::insertEnd(CarSpec inputData)
 	}
 
 	//Export changes to file
-	if (!fileName.empty()) { exportData(); }
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 int SLList::findPosNODE(SLLNode* inputNode)
@@ -484,6 +514,12 @@ int SLList::findPOS(CarSpec searchData)
 void SLList::replaceNodeNODE(SLLNode* inputNode, CarSpec replacementData)
 {
 	inputNode->setData(replacementData);
+
+	//Export changes to file
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 void SLList::replaceNodePOS(int POS, CarSpec replacementData)
@@ -491,6 +527,12 @@ void SLList::replaceNodePOS(int POS, CarSpec replacementData)
 	SLLNode* p = findNodePOS(POS);
 
 	p->setData(replacementData);
+
+	//Export changes to file
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 void SLList::replaceNodeDATA(CarSpec searchData, CarSpec replacementData)
@@ -498,6 +540,12 @@ void SLList::replaceNodeDATA(CarSpec searchData, CarSpec replacementData)
 	SLLNode* p = findNodeDATA(searchData);
 
 	p->setData(replacementData);
+
+	//Export changes to file
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 void SLList::swapNodesDataNODEs(SLLNode* firstNode, SLLNode* secondNode)
@@ -507,6 +555,12 @@ void SLList::swapNodesDataNODEs(SLLNode* firstNode, SLLNode* secondNode)
 	firstNode->setData(secondNode->getData());
 
 	secondNode->setData(tempData);
+
+	//Export changes to file
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 void SLList::swapNodesDataPOSs(int firstPOS, int secondPOS)
@@ -515,6 +569,12 @@ void SLList::swapNodesDataPOSs(int firstPOS, int secondPOS)
 	SLLNode* secondNode = findNodePOS(secondPOS);
 
 	swapNodesDataNODEs(firstNode, secondNode);
+
+	//Export changes to file
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 void SLList::swapNodesDataDATAs(CarSpec firstSearchData, CarSpec secondSearchData)
@@ -523,6 +583,12 @@ void SLList::swapNodesDataDATAs(CarSpec firstSearchData, CarSpec secondSearchDat
 	SLLNode* secondNode = findNodeDATA(secondSearchData);
 
 	swapNodesDataNODEs(firstNode, secondNode);
+
+	//Export changes to file
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 void SLList::deleteNodePOS(int POS)
@@ -559,6 +625,12 @@ void SLList::deleteNodePOS(int POS)
 	}
 
 	length--;
+
+	//Export changes to file
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
 void SLList::deleteNodeDATA(CarSpec searchData)
@@ -571,9 +643,20 @@ void SLList::deleteNodeDATA(CarSpec searchData)
 	}
 
 	deleteNodePOS(POS);
+
+	//Export changes to file
+	if (!fileName.empty())
+	{
+		exportData();
+	}
 }
 
-void SLList::emptyList()
+void SLList::deleteFile()
+{
+	remove(fileName.c_str());
+}
+
+void SLList::emptyListWithoutChangesToFile()
 {
 	if (length == 0)
 	{
@@ -604,13 +687,6 @@ void SLList::emptyList()
 	tail = nullptr;
 }
 
-void SLList::emptyListAndFile()
-{
-	emptyList();
-
-	remove(fileName.c_str());
-}
-
 void SLList::displayAllADT()
 {
 	SLLNode* p = head;
@@ -630,5 +706,5 @@ void SLList::displayAllADT()
 
 SLList::~SLList()
 {
-	emptyList();
+	emptyListWithoutChangesToFile();
 }
