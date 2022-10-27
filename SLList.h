@@ -21,6 +21,8 @@ public:
 	SLList(std::string inputFileName);
 
 	SLList();
+
+	SLList& operator=(SLList& other);
 	
 	//Setter getter functions:
 	void setHead(SLLNode* inputHead);
@@ -85,11 +87,11 @@ public:
 	void deleteNodeDATA(CarSpec searchData);
 
 	void deleteFile();
-	
+
 	//Empties list by deleting each node, sets head and tail to nullptr and sets length to 0
-	void emptyListWithoutChangesToFile();
+	void emptyList();
 	
-	//Calls emptyList and then deletes file
+	//Calls emptyList and then exports empty list to file
 	void emptyListAndFile();
 	
 	//Traverses list to display

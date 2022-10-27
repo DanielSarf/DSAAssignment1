@@ -1,5 +1,5 @@
 #include <iostream>
-#include <windows.h>
+#include <time.h>
 
 #include "SLList.h"
 
@@ -10,25 +10,25 @@ int randomNumber(int min, int max)
 	return min + rand() % (max - min + 1);
 }
 
-void displayCarsOfCriteria(SLList &list, criteria displayCriteria)
+	////Goes through list and displays 
+
+	//SLLNode* p = list.getHead();
+
+	//int counter = 0;
+
+	//while (p != nullptr)
+	//{
+	//	/*if(p->getData().isEqualCRITERIA())
+	//	std::cout << "Data at Position " << counter << ":\n";
+	//	p->getData().display();
+	//	std::cout << "\n";*/
+
+	//	counter++;
+	//	p = p->getNext();
+	//}
+
+void displaySpecificDataOfCriteria(SLList &list, int matchWith, criteria displayCriteria)
 {
-	//Goes through list and displays 
-
-
-	SLLNode* p = list.getHead();
-
-	int counter = 0;
-
-	while (p != nullptr)
-	{
-		/*if(p->getData().isEqualCRITERIA())
-		std::cout << "Data at Position " << counter << ":\n";
-		p->getData().display();
-		std::cout << "\n";*/
-
-		counter++;
-		p = p->getNext();
-	}
 }
 
 int returnCountOfList(SLList &list) //DONE
@@ -46,7 +46,8 @@ int returnCountOfList(SLList &list) //DONE
 	return count;
 }
 
-int countOfCriteria(SLList& list, string matchWith, criteria countCriteria) //DONE
+template <typename T>
+int countOfCriteria(SLList& list, T matchWith, criteria countCriteria) //DONE
 {
 	SLLNode* p = list.getHead();
 
@@ -58,118 +59,7 @@ int countOfCriteria(SLList& list, string matchWith, criteria countCriteria) //DO
 	{
 		data = p->getData();
 
-		if (p->getData().isDataMemberEqual(matchWith, countCriteria))
-		{
-			count++;
-		}
-
-		p = p->getNext();
-	}
-
-	return count;
-}
-
-int countOfCriteria(SLList& list, int matchWith, criteria countCriteria) //DONE
-{
-	SLLNode* p = list.getHead();
-
-	int count = 0;
-
-	CarSpec data;
-
-	while (p != nullptr)
-	{
-		data = p->getData();
-
-		if (p->getData().isDataMemberEqual(matchWith, countCriteria))
-		{
-			count++;
-		}
-
-		p = p->getNext();
-	}
-
-	return count;
-}
-
-int countOfCriteria(SLList& list, carColors matchWith, criteria countCriteria) //DONE
-{
-	SLLNode* p = list.getHead();
-
-	int count = 0;
-
-	CarSpec data;
-
-	while (p != nullptr)
-	{
-		data = p->getData();
-
-		if (p->getData().isDataMemberEqual(matchWith, countCriteria))
-		{
-			count++;
-		}
-
-		p = p->getNext();
-	}
-
-	return count;
-}
-
-int countOfCriteria(SLList& list, availabilityStatus matchWith, criteria countCriteria) //DONE
-{
-	SLLNode* p = list.getHead();
-
-	int count = 0;
-
-	CarSpec data;
-
-	while (p != nullptr)
-	{
-		data = p->getData();
-
-		if (p->getData().isDataMemberEqual(matchWith, countCriteria))
-		{
-			count++;
-		}
-
-		p = p->getNext();
-	}
-
-	return count;
-}
-
-int countOfCriteria(SLList& list, float matchWith, criteria countCriteria) //DONE
-{
-	SLLNode* p = list.getHead();
-
-	int count = 0;
-
-	CarSpec data;
-
-	while (p != nullptr)
-	{
-		data = p->getData();
-
-		if (p->getData().isDataMemberEqual(matchWith, countCriteria))
-		{
-			count++;
-		}
-
-		p = p->getNext();
-	}
-
-	return count;
-}
-
-int countOfCriteria(SLList& list, bool matchWith, criteria countCriteria) //DONE
-{
-	SLLNode* p = list.getHead();
-
-	int count = 0;
-
-	while (p != nullptr)
-	{
-		if (p->getData().isDataMemberEqual(matchWith, countCriteria))
+		if ((p->getData().isDataMemberEqual(matchWith, countCriteria)))
 		{
 			count++;
 		}
@@ -198,18 +88,18 @@ void sortList(SLList &list, criteria sortingCriteria, bool ascendingOrder)
 	}
 }
 
-void displayItemsAscending(SLList &list, criteria sortingCriteria)
+void displayItemsAscending(SLList &list, criteria sortingCriteria) //Done
 {
-	SLList tempList;
+	SLList tempList = list;
 
 	sortList(tempList, sortingCriteria, true);
 
 	tempList.displayAllADT();
 }
 
-void displayItemsDescending(SLList &list, criteria sortingCriteria)
+void displayItemsDescending(SLList &list, criteria sortingCriteria) //Done
 {
-	SLList tempList;
+	SLList tempList = list;
 
 	sortList(tempList, sortingCriteria, false);
 
@@ -345,7 +235,11 @@ int main()
 
 	populateList(Test, 100);
 
-	displayItemsAscending(Test, criteria::carYear);
+	//displayItemsAscending(Test, criteria::carYear);
+
+	std::string check = "Honda";
+
+	cout << countOfCriteria(Test, check, criteria::carCompanyName);
 
 	return 0;
 }

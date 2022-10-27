@@ -48,6 +48,22 @@ SLList::SLList()
 	length = 0;
 }
 
+SLList& SLList::operator=(SLList& other)
+{
+	emptyListAndFile();
+	
+	SLLNode* p = other.getHead();
+
+	for (int i = 0; i < other.getLength(); i++)
+	{
+		insertEnd(p->getData());
+
+		p = p->getNext();
+	}
+
+	return *this;
+}
+
 bool SLList::isEmpty()
 {
 	return (length == 0);
@@ -570,7 +586,7 @@ void SLList::deleteFile()
 	remove(fileName.c_str());
 }
 
-void SLList::emptyListWithoutChangesToFile()
+void SLList::emptyList()
 {
 	if (length == 0)
 	{
@@ -601,6 +617,18 @@ void SLList::emptyListWithoutChangesToFile()
 	tail = nullptr;
 }
 
+void SLList::emptyListAndFile()
+{
+	emptyList();
+
+	if (!fileName.empty())
+	{
+		std::cerr << "File not specified\n";
+
+		exportData();
+	}
+}
+
 void SLList::displayAllADT()
 {
 	SLLNode* p = head;
@@ -620,5 +648,5 @@ void SLList::displayAllADT()
 
 SLList::~SLList()
 {
-	emptyListWithoutChangesToFile();
+	emptyList();
 }
