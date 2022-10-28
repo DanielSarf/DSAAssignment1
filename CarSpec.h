@@ -36,70 +36,62 @@ private:
 	float priceDiscountPercentage;
 	bool isInsuredByCompany;
 
-	//When displaying data, enums need to be represented using strings describing them
-	std::string carColorToString();
-	std::string availabilityStatusToString();
-
 public:
 	//Parameterized Contructor allows objects to be made with missing information or can be used to make search queries using a non-member function
 	CarSpec(std::string inputCarCompanyName = "", std::string inputCarModel = "", int inputCarYear = NULL, carColors inputCarColor = carColors::NA,
 		availabilityStatus inputCarAvailabilityStatus = availabilityStatus::NA, float inputCarConditionScore = NULL, float inputCarPriceUSD = NULL, float inputCarRentUSD = NULL,
 		float inputRentDiscountPercentage = NULL, float inputPriceDiscountPercentage = NULL, bool inputIsInsuredByCompany = NULL);
 
-	//Customized operator equality operator that ignores missing information (useful to display objects of a certain type)
-	bool operator==(CarSpec);
+	//Customized operator equality operator
+	bool operator==(CarSpec) const;
 
-	bool isEqualCRITERIA(CarSpec other, criteria inputCriteria);
-
-	bool isLessThan(CarSpec other, criteria inputCriteria);
-
-	bool isLessThanOrEqual(CarSpec other, criteria inputCriteria);
-
-	bool isGreaterThan(CarSpec other, criteria inputCriteria);
-
-	bool isGreaterThanOrEqual(CarSpec other, criteria inputCriteria);
+	bool isEqualCRITERIA(CarSpec other, criteria inputCriteria) const;
+	bool isLessThanCRITERIA(CarSpec other, criteria inputCriteria) const;
+	bool isLessThanOrEqualCRITERIA(CarSpec other, criteria inputCriteria) const;
+	bool isGreaterThanCRITERIA(CarSpec other, criteria inputCriteria) const;
+	bool isGreaterThanOrEqualCRITERIA(CarSpec other, criteria inputCriteria) const;
 
 	//Setter getter functions:
 	void setCarCompanyName(std::string inputCarCompanyName);
-	std::string getCarCompanyName();
+	std::string getCarCompanyName() const;
 
 	void setCarModel(std::string inputCarModel);
-	std::string getCarModel();
+	std::string getCarModel() const;
 
 	void setCarYear(int inputCarYear);
-	int getCarYear();
+	int getCarYear() const;
 
 	void setCarColor(carColors inputCarColor);
-	carColors getCarColor();
+	carColors getCarColor() const;
 
 	void setCarAvailabilityStatus(availabilityStatus inputCarAvailabilityStatus);
-	availabilityStatus getCarAvailabilityStatus();
+	availabilityStatus getCarAvailabilityStatus() const;
 
 	void setCarConditionScore(float inputCarConditionScore);
-	float getCarConditionScore();
+	float getCarConditionScore() const;
 
 	void setCarPriceUSD(float inputCarPriceUSD);
-	float getCarPriceUSD();
+	float getCarPriceUSD() const;
 
 	void setCarRentUSD(float inputCarRentUSD);
-	float getCarRentUSD();
+	float getCarRentUSD() const;
 
 	void setRentDiscountPercentage(float inputRentDiscountPercentage);
-	float getRentDiscountPercentage();
+	float getRentDiscountPercentage() const;
 
 	void setPriceDiscountPercentage(float inputPriceDiscountPercentage);
-	float getPriceDiscountPercentage();
+	float getPriceDiscountPercentage() const;
 
 	void setIsInsuredByCompany(bool inputIsInsuredByCompany);
-	bool getIsInsuredByCompany();
+	bool getIsInsuredByCompany() const;
 
-	bool isDataMemberEqual(std::string matchWith, criteria inputCriteria);
-	bool isDataMemberEqual(int matchWith, criteria inputCriteria);
-	bool isDataMemberEqual(carColors matchWith, criteria inputCriteria);
-	bool isDataMemberEqual(availabilityStatus matchWith, criteria inputCriteria);
-	bool isDataMemberEqual(float matchWith, criteria inputCriteria);
-	bool isDataMemberEqual(bool matchWith, criteria inputCriteria);
+	template<typename T>
+	bool isDataMemberEqual(T matchWith, criteria inputCriteria) const;
+	
+	//When displaying data, enums need to be represented using strings describing them
+	std::string carColorToString() const;
+	std::string availabilityStatusToString() const;
 
-	//Display function outputs to console in a neat format
-	void display();
+	//Outputs to stream in a neat format
+	friend std::ostream& operator<<(std::ostream& os, const CarSpec& object);
 };

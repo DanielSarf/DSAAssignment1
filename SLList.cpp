@@ -629,7 +629,7 @@ void SLList::emptyListAndFile()
 	}
 }
 
-void SLList::displayAllADT()
+void SLList::displayAll()
 {
 	SLLNode* p = head;
 
@@ -637,9 +637,7 @@ void SLList::displayAllADT()
 
 	while (p != nullptr)
 	{
-		std::cout << "Data at Position " << counter << ":\n";
-		p->getData().display();
-		std::cout << "\n";
+		std::cout << "Data at Position " << counter << ":\n" << p->getData() << "\n";
 
 		counter++;
 		p = p->getNext();

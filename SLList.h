@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <cstdio>
-#include <fstream>
 #include <cstring>
 
 #include "SLLNode.h"
@@ -95,7 +94,7 @@ public:
 	void emptyListAndFile();
 	
 	//Traverses list to display
-	void displayAllADT();
+	void displayAll();
 	
 	//Calls emptyList
 	~SLList();

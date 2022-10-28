@@ -61,7 +61,7 @@ CarSpec::CarSpec(std::string inputCarCompanyName, std::string inputCarModel, int
 	isInsuredByCompany = inputIsInsuredByCompany;
 }
 
-bool CarSpec::operator==(CarSpec other)
+bool CarSpec::operator==(CarSpec other) const
 {
 	//Goes through each data memember to check if they are equal but if data memeber is null it ignores and still returns true 
 
@@ -123,7 +123,7 @@ bool CarSpec::operator==(CarSpec other)
 	return true;
 }
 
-bool CarSpec::isEqualCRITERIA(CarSpec other, criteria inputCriteria)
+bool CarSpec::isEqualCRITERIA(CarSpec other, criteria inputCriteria) const
 {
 	if (inputCriteria == criteria::carCompanyName)
 	{
@@ -175,7 +175,7 @@ bool CarSpec::isEqualCRITERIA(CarSpec other, criteria inputCriteria)
 	exit(0);
 }
 
-bool CarSpec::isLessThan(CarSpec other, criteria inputCriteria)
+bool CarSpec::isLessThanCRITERIA(CarSpec other, criteria inputCriteria) const
 {
 	if (inputCriteria == criteria::carCompanyName)
 	{
@@ -227,19 +227,19 @@ bool CarSpec::isLessThan(CarSpec other, criteria inputCriteria)
 	exit(0);
 }
 
-bool CarSpec::isLessThanOrEqual(CarSpec other, criteria inputCriteria)
+bool CarSpec::isLessThanOrEqualCRITERIA(CarSpec other, criteria inputCriteria) const
 {
-	return (isLessThan(other, inputCriteria) || isEqualCRITERIA(other, inputCriteria));
+	return (isLessThanCRITERIA(other, inputCriteria) || isEqualCRITERIA(other, inputCriteria));
 }
 
-bool CarSpec::isGreaterThan(CarSpec other, criteria inputCriteria)
+bool CarSpec::isGreaterThanCRITERIA(CarSpec other, criteria inputCriteria) const
 {
-	return (other.isLessThan(*this, inputCriteria));
+	return (other.isLessThanCRITERIA(*this, inputCriteria));
 }
 
-bool CarSpec::isGreaterThanOrEqual(CarSpec other, criteria inputCriteria)
+bool CarSpec::isGreaterThanOrEqualCRITERIA(CarSpec other, criteria inputCriteria) const
 {
-	return (isGreaterThan(other, inputCriteria) || isEqualCRITERIA(other, inputCriteria));
+	return (isGreaterThanCRITERIA(other, inputCriteria) || isEqualCRITERIA(other, inputCriteria));
 }
 
 void CarSpec::setCarCompanyName(std::string inputCarCompanyName)
@@ -268,7 +268,7 @@ void CarSpec::setCarCompanyName(std::string inputCarCompanyName)
 	}
 }
 
-std::string CarSpec::getCarCompanyName()
+std::string CarSpec::getCarCompanyName() const
 {
 	for (int indexOfLastSpaceDelimiter = 31; indexOfLastSpaceDelimiter >= 0; indexOfLastSpaceDelimiter--)
 	{
@@ -307,7 +307,7 @@ void CarSpec::setCarModel(std::string inputCarModel)
 	}
 }
 
-std::string CarSpec::getCarModel()
+std::string CarSpec::getCarModel() const
 {
 	for (int indexOfLastSpaceDelimiter = 31; indexOfLastSpaceDelimiter >= 0; indexOfLastSpaceDelimiter--)
 	{
@@ -325,7 +325,7 @@ void CarSpec::setCarYear(int inputCarYear)
 	carYear = inputCarYear;
 }
 
-int CarSpec::getCarYear()
+int CarSpec::getCarYear() const
 {
 	return carYear;
 }
@@ -335,7 +335,7 @@ void CarSpec::setCarColor(carColors inputCarColor)
 	carColor = inputCarColor;
 }
 
-carColors CarSpec::getCarColor()
+carColors CarSpec::getCarColor() const
 {
 	return carColor;
 }
@@ -345,7 +345,7 @@ void CarSpec::setCarAvailabilityStatus(availabilityStatus inputCAvailabilityStat
 	carAvailabilityStatus = inputCAvailabilityStatus;
 }
 
-availabilityStatus CarSpec::getCarAvailabilityStatus()
+availabilityStatus CarSpec::getCarAvailabilityStatus() const
 {
 	return carAvailabilityStatus;
 }
@@ -355,7 +355,7 @@ void CarSpec::setCarConditionScore(float inputCarConditionScore)
 	carConditionScore = inputCarConditionScore;
 }
 
-float CarSpec::getCarConditionScore()
+float CarSpec::getCarConditionScore() const
 {
 	return carConditionScore;
 }
@@ -365,7 +365,7 @@ void CarSpec::setCarPriceUSD(float inputCarPriceUSD)
 	carPriceUSD = inputCarPriceUSD;
 }
 
-float CarSpec::getCarPriceUSD()
+float CarSpec::getCarPriceUSD() const
 {
 	return carPriceUSD;
 }
@@ -375,7 +375,7 @@ void CarSpec::setCarRentUSD(float inputCarRentUSD)
 	carRentUSD = inputCarRentUSD;
 }
 
-float CarSpec::getCarRentUSD()
+float CarSpec::getCarRentUSD() const
 {
 	return carRentUSD;
 }
@@ -385,7 +385,7 @@ void CarSpec::setRentDiscountPercentage(float inputRentDiscountPercentage)
 	rentDiscountPercentage = inputRentDiscountPercentage;
 }
 
-float CarSpec::getRentDiscountPercentage()
+float CarSpec::getRentDiscountPercentage() const
 {
 	return rentDiscountPercentage;
 }
@@ -395,7 +395,7 @@ void CarSpec::setPriceDiscountPercentage(float inputPriceDiscountPercentage)
 	priceDiscountPercentage = inputPriceDiscountPercentage;
 }
 
-float CarSpec::getPriceDiscountPercentage()
+float CarSpec::getPriceDiscountPercentage() const
 {
 	return priceDiscountPercentage;
 }
@@ -405,12 +405,13 @@ void CarSpec::setIsInsuredByCompany(bool inputIsInsuredByCompany)
 	isInsuredByCompany = inputIsInsuredByCompany;
 }
 
-bool CarSpec::getIsInsuredByCompany()
+bool CarSpec::getIsInsuredByCompany() const
 {
 	return isInsuredByCompany;
 }
 
-bool CarSpec::isDataMemberEqual(std::string matchWith, criteria inputCriteria)
+template <typename T>
+bool CarSpec::isDataMemberEqual(T matchWith, criteria inputCriteria) const
 {
 	if (inputCriteria == criteria::carCompanyName)
 	{
@@ -420,51 +421,19 @@ bool CarSpec::isDataMemberEqual(std::string matchWith, criteria inputCriteria)
 	{
 		return (getCarModel().compare(matchWith) == 0);
 	}
-
-	std::cerr << "Incorrect criteria\n";
-
-	exit(0);
-}
-
-bool CarSpec::isDataMemberEqual(int matchWith, criteria inputCriteria)
-{
-	if (inputCriteria == criteria::carYear)
+	else if (inputCriteria == criteria::carYear)
 	{
 		return (carYear == matchWith);
 	}
-
-	std::cerr << "Incorrect criteria\n";
-
-	exit(0);
-}
-
-bool CarSpec::isDataMemberEqual(carColors matchWith, criteria inputCriteria)
-{
-	if (inputCriteria == criteria::carColor)
+	else if (inputCriteria == criteria::carColor)
 	{
 		return (carColor == matchWith);
 	}
-
-	std::cerr << "Incorrect criteria\n";
-
-	exit(0);
-}
-
-bool CarSpec::isDataMemberEqual(availabilityStatus matchWith, criteria inputCriteria)
-{
-	if (inputCriteria == criteria::availabilityStatus)
+	else if (inputCriteria == criteria::availabilityStatus)
 	{
 		return (carAvailabilityStatus == matchWith);
 	}
-
-	std::cerr << "Incorrect criteria\n";
-
-	exit(0);
-}
-
-bool CarSpec::isDataMemberEqual(float matchWith, criteria inputCriteria)
-{
-	if (inputCriteria == criteria::carConditionScore)
+	else if (inputCriteria == criteria::carConditionScore)
 	{
 		return (carConditionScore == matchWith);
 	}
@@ -484,15 +453,7 @@ bool CarSpec::isDataMemberEqual(float matchWith, criteria inputCriteria)
 	{
 		return (priceDiscountPercentage == matchWith);
 	}
-
-	std::cerr << "Incorrect criteria\n";
-
-	exit(0);
-}
-
-bool CarSpec::isDataMemberEqual(bool matchWith, criteria inputCriteria)
-{
-	if (inputCriteria == criteria::isInsuredByCompany)
+	else if (inputCriteria == criteria::isInsuredByCompany)
 	{
 		return (isInsuredByCompany == matchWith);
 	}
@@ -502,7 +463,7 @@ bool CarSpec::isDataMemberEqual(bool matchWith, criteria inputCriteria)
 	exit(0);
 }
 
-std::string CarSpec::carColorToString()
+std::string CarSpec::carColorToString() const
 {
 	//Current enum constants: red, blue, white, black, silver, NA
 
@@ -534,7 +495,7 @@ std::string CarSpec::carColorToString()
 	return "ERROR";
 }
 
-std::string CarSpec::availabilityStatusToString()
+std::string CarSpec::availabilityStatusToString() const
 {
 	//Current enum constants: available, rented, sold, NA
 
@@ -558,19 +519,21 @@ std::string CarSpec::availabilityStatusToString()
 	return "ERROR";
 }
 
-void CarSpec::display()
+std::ostream& operator<<(std::ostream& os, const CarSpec& object)
 {
 	//to_string functions are necessary for ternary operator
 
-	std::cout << "Car company name: " << (getCarCompanyName() == "" ? "N/A" : getCarCompanyName());
-	std::cout << "\nCar model: " << (getCarModel() == "" ? "N/A" : getCarModel());
-	std::cout << "\nCar year: " << (carYear == NULL ? "N/A" : std::to_string(carYear));
-	std::cout << "\nCar color: " << carColorToString();
-	std::cout << "\nCar availability status: " << availabilityStatusToString();
-	std::cout << "\nCar condition score: " << (carConditionScore == 0 ? "N/A" : std::to_string(carConditionScore));
-	std::cout << "\nCar price in USD: " << (carPriceUSD == 0 ? "N/A" : std::to_string(carPriceUSD));
-	std::cout << "\nCar rent in USD: " << (carRentUSD == 0 ? "N/A" : std::to_string(carRentUSD));
-	std::cout << "\nRent discount percentage: " << (rentDiscountPercentage == 0 ? "N/A" : std::to_string(rentDiscountPercentage));
-	std::cout << "\nPrice discount percentage: " << (priceDiscountPercentage == 0 ? "N/A" : std::to_string(priceDiscountPercentage));
-	std::cout << "\nIs insured by company: " << (isInsuredByCompany == true ? "Yes\n" : "No\n");
+	os << "Car company name: " << (object.getCarCompanyName() == "" ? "N/A" : object.getCarCompanyName());
+	os << "\nCar model: " << (object.getCarModel() == "" ? "N/A" : object.getCarModel());
+	os << "\nCar year: " << (object.getCarYear() == NULL ? "N/A" : std::to_string(object.getCarYear()));
+	os << "\nCar color: " << object.carColorToString();
+	os << "\nCar availability status: " << object.availabilityStatusToString();
+	os << "\nCar condition score: " << (object.getCarConditionScore() == 0 ? "N/A" : std::to_string(object.getCarConditionScore()));
+	os << "\nCar price in USD: " << (object.getCarPriceUSD() == 0 ? "N/A" : std::to_string(object.getCarPriceUSD()));
+	os << "\nCar rent in USD: " << (object.getCarRentUSD() == 0 ? "N/A" : std::to_string(object.getCarRentUSD()));
+	os << "\nRent discount percentage: " << (object.getRentDiscountPercentage() == 0 ? "N/A" : std::to_string(object.getRentDiscountPercentage()));
+	os << "\nPrice discount percentage: " << (object.getPriceDiscountPercentage() == 0 ? "N/A" : std::to_string(object.getPriceDiscountPercentage()));
+	os << "\nIs insured by company: " << (object.getIsInsuredByCompany() == true ? "Yes\n" : "No\n");
+
+	return os;
 }

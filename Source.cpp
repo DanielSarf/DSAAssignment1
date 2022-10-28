@@ -5,11 +5,43 @@
 
 using namespace std;
 
+int randomNumber(int min, int max);
+
+void searchInCriteriaAndDisplay(SLList& list, int matchWith, criteria displayCriteria);
+
+int returnCountOfList(SLList& list);
+
+template <typename T>
+int countOfCriteria(SLList& list, T matchWith, criteria countCriteria);
+
+void sortList(SLList& list, criteria sortingCriteria, bool ascendingOrder);
+
+void displayItemsAscending(SLList& list, criteria sortingCriteria);
+
+void displayItemsDescending(SLList& list, criteria sortingCriteria);
+
+void populateList(SLList& list, int numberOfObjects);
+
+int main()
+{
+	srand((unsigned int)time(NULL));
+
+	SLList Test;
+
+	populateList(Test, 100);
+
+	Test.displayAll();
+
+	return 0;
+}
+
 int randomNumber(int min, int max)
 {
 	return min + rand() % (max - min + 1);
 }
 
+void searchInCriteriaAndDisplay(SLList& list, int matchWith, criteria displayCriteria)
+{
 	////Goes through list and displays 
 
 	//SLLNode* p = list.getHead();
@@ -26,12 +58,9 @@ int randomNumber(int min, int max)
 	//	counter++;
 	//	p = p->getNext();
 	//}
-
-void displaySpecificDataOfCriteria(SLList &list, int matchWith, criteria displayCriteria)
-{
 }
 
-int returnCountOfList(SLList &list) //DONE
+int returnCountOfList(SLList& list) //DONE
 {
 	SLLNode* p = list.getHead();
 
@@ -70,7 +99,7 @@ int countOfCriteria(SLList& list, T matchWith, criteria countCriteria) //DONE
 	return count;
 }
 
-void sortList(SLList &list, criteria sortingCriteria, bool ascendingOrder)
+void sortList(SLList& list, criteria sortingCriteria, bool ascendingOrder)
 {
 	//Alright boys we'll have to think in powers of 2 i.e. 1, 2, 4, 8 etc.
 
@@ -88,25 +117,25 @@ void sortList(SLList &list, criteria sortingCriteria, bool ascendingOrder)
 	}
 }
 
-void displayItemsAscending(SLList &list, criteria sortingCriteria) //Done
+void displayItemsAscending(SLList& list, criteria sortingCriteria) //Done
 {
 	SLList tempList = list;
 
 	sortList(tempList, sortingCriteria, true);
 
-	tempList.displayAllADT();
+	tempList.displayAll();
 }
 
-void displayItemsDescending(SLList &list, criteria sortingCriteria) //Done
+void displayItemsDescending(SLList& list, criteria sortingCriteria) //Done
 {
 	SLList tempList = list;
 
 	sortList(tempList, sortingCriteria, false);
 
-	tempList.displayAllADT();
+	tempList.displayAll();
 }
 
-void populateList(SLList& list, int numberOfObjects)
+void populateList(SLList& list, int numberOfObjects) //Done
 {
 	//Function creats CarSpec objects by randomly choosing available options, then inserts them into list
 
@@ -129,7 +158,7 @@ void populateList(SLList& list, int numberOfObjects)
 		if (currentRandomNumber == 1)
 		{
 			carCompanyName.assign("Honda");
-			
+
 			currentRandomNumber = randomNumber(1, 3);
 
 			if (currentRandomNumber == 1)
@@ -206,40 +235,23 @@ void populateList(SLList& list, int numberOfObjects)
 		carYear = randomNumber(2010, 2022);
 
 		carColor = (carColors)randomNumber(0, 4);
-		
+
 		carAvailabilityStatus = (availabilityStatus)randomNumber(0, 2);
-		
+
 		carConditionScore = (float)randomNumber(500, 1000);
-		
+
 		carPriceUSD = (float)randomNumber(8000, 25000);
-		
+
 		carRentUSD = (float)randomNumber(80, 300);
-		
+
 		rentDiscountPercentage = (float)randomNumber(0, 30);
-		
+
 		priceDiscountPercentage = (float)randomNumber(0, 20);
-		
+
 		isInsuredByCompany = (bool)randomNumber(0, 1);
 
 		list.insertEnd(CarSpec(carCompanyName, carModel, carYear, carColor,
 			carAvailabilityStatus, carConditionScore, carPriceUSD, carRentUSD,
 			rentDiscountPercentage, priceDiscountPercentage, isInsuredByCompany));
 	}
-}
-
-int main()
-{
-	srand((unsigned int)time(NULL));
-
-	SLList Test;
-
-	populateList(Test, 100);
-
-	//displayItemsAscending(Test, criteria::carYear);
-
-	std::string check = "Honda";
-
-	cout << countOfCriteria(Test, check, criteria::carCompanyName);
-
-	return 0;
 }
