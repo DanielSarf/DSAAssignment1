@@ -1,112 +1,141 @@
 #include <iostream>
-#include <windows.h>
+#include <time.h>
 
 #include "SLList.h"
 
 using namespace std;
 
-int randomNumber(int min, int max)
+int randomNumber(int min, int max);
+
+void searchInCriteriaAndDisplay(SLList& list, int matchWith, criteria displayCriteria);
+
+int returnCountOfList(SLList& list);
+
+template <typename T>
+int countOfCriteria(SLList& list, T matchWith, criteria countCriteria);
+
+void sortList(SLList& list, criteria sortingCriteria, bool ascendingOrder);
+
+void displayItemsAscending(SLList& list, criteria sortingCriteria);
+
+void displayItemsDescending(SLList& list, criteria sortingCriteria);
+
+void populateList(SLList& list, int numberOfObjects);
+
+int main()
 {
+	srand((unsigned int)time(NULL));
 
-	return min + rand() % (max - min + 1);
-}
+	SLList Test;
 
-SLList contructObject()
-{
-	return SLList("file.bin");
-}
+	populateList(Test, 100);
 
-SLList contructSearchObject()
-{
-	return SLList("file.bin");
-}
+	Test.displayAll();
 
-void displayCarsOfType(CarSpec searchObject, SLList* list)
-{
-
-}
-
-int returnCountOfList(SLList* list)
-{
 	return 0;
 }
 
-SLList sortList(SLList list, criteria sortingCriteria, bool ascendingOrder)
+int randomNumber(int min, int max)
 {
-	if (list.getLength() == 1)
+	return min + rand() % (max - min + 1);
+}
+
+void searchInCriteriaAndDisplay(SLList& list, int matchWith, criteria displayCriteria)
+{
+	////Goes through list and displays 
+
+	//SLLNode* p = list.getHead();
+
+	//int counter = 0;
+
+	//while (p != nullptr)
+	//{
+	//	/*if(p->getData().isEqualCRITERIA())
+	//	std::cout << "Data at Position " << counter << ":\n";
+	//	p->getData().display();
+	//	std::cout << "\n";*/
+
+	//	counter++;
+	//	p = p->getNext();
+	//}
+}
+
+int returnCountOfList(SLList& list) //DONE
+{
+	SLLNode* p = list.getHead();
+
+	int count = 0;
+
+	while (p != nullptr)
 	{
-		return list;
+		count++;
+		p = p->getNext();
 	}
 
-	int t1 = list.getLength() / 2;
-	int t2 = list.getLength() - t1;
+	return count;
+}
 
-	SLList t1List, t2List;
+template <typename T>
+int countOfCriteria(SLList& list, T matchWith, criteria countCriteria) //DONE
+{
+	SLLNode* p = list.getHead();
 
-	for (int i = 0; i < t1; i++)
+	int count = 0;
+
+	CarSpec data;
+
+	while (p != nullptr)
 	{
-		t1List.insertEnd(list.findNodePOS(i)->getData());
-	}
+		data = p->getData();
 
-	for (int i = t1; i < list.getLength(); i++)
-	{
-		t1List.insertEnd(list.findNodePOS(i)->getData());
-	}
-
-	t1List = sortList(t1List, sortingCriteria, ascendingOrder);
-	t2List = sortList(t2List, sortingCriteria, ascendingOrder);
-
-	if (ascendingOrder)
-	{
-		for (int i = 0, iT1 = 0, iT2 = 0; i < list.getLength(); i++)
+		if ((p->getData().isDataMemberEqual(matchWith, countCriteria)))
 		{
-			if ((t1List.findNodePOS(iT1)->getData().isLessThanOrEqual(t2List.findNodePOS(iT2)->getData(), sortingCriteria) && iT1 != t1) || iT2 == t2)
-			{
-				list.replaceNodePOS(i, t1List.findNodePOS(iT1)->getData());
-				iT1++;
-			}
-			else if ((t2List.findNodePOS(iT2)->getData().isLessThanOrEqual(t1List.findNodePOS(iT1)->getData(), sortingCriteria) && iT2 != t2) || iT1 == t1)
-			{
-				list.replaceNodePOS(i, t2List.findNodePOS(iT2)->getData());
-				iT2++;
-			}
+			count++;
 		}
+
+		p = p->getNext();
 	}
-	else
+
+	return count;
+}
+
+void sortList(SLList& list, criteria sortingCriteria, bool ascendingOrder)
+{
+	//Alright boys we'll have to think in powers of 2 i.e. 1, 2, 4, 8 etc.
+
+	int listLength = list.getLength();
+
+	if (listLength <= 1)
 	{
-		for (int i = 0, iT1 = 0, iT2 = 0; i < list.getLength(); i++)
-		{
-			if ((t1List.findNodePOS(iT1)->getData().isLessThanOrEqual(t2List.findNodePOS(iT2)->getData(), sortingCriteria) && iT1 != t1) || iT2 == t2)
-			{
-				list.replaceNodePOS(i, t1List.findNodePOS(iT1)->getData());
-				iT1++;
-			}
-			else if ((t2List.findNodePOS(iT2)->getData().isLessThanOrEqual(t1List.findNodePOS(iT1)->getData(), sortingCriteria) && iT2 != t2) || iT1 == t1)
-			{
-				list.replaceNodePOS(i, t2List.findNodePOS(iT2)->getData());
-				iT2++;
-			}
-		}
+		return;
 	}
 
-	return list;
+	int stepSize = 1;
+	while (stepSize < listLength)
+	{
+
+	}
 }
 
-void displayItemsAscending(SLList list, criteria sortingCriteria)
+void displayItemsAscending(SLList& list, criteria sortingCriteria) //Done
 {
-	SLList sortedList = sortList(list, sortingCriteria, true);
+	SLList tempList = list;
 
-	sortedList.displayAllADT();
+	sortList(tempList, sortingCriteria, true);
+
+	tempList.displayAll();
 }
 
-void displayItemsDescending(SLList list, criteria sortingCriteria)
+void displayItemsDescending(SLList& list, criteria sortingCriteria) //Done
 {
-	SLList sortedList = sortList(list, sortingCriteria, false);
+	SLList tempList = list;
 
-	sortedList.displayAllADT();
+	sortList(tempList, sortingCriteria, false);
+
+	tempList.displayAll();
 }
 
-void populateList(SLList& list, int numberOfObjects)
+void populateList(SLList& list, int numberOfObjects) //Done
 {
 	//Function creats CarSpec objects by randomly choosing available options, then inserts them into list
 
@@ -129,7 +158,7 @@ void populateList(SLList& list, int numberOfObjects)
 		if (currentRandomNumber == 1)
 		{
 			carCompanyName.assign("Honda");
-			
+
 			currentRandomNumber = randomNumber(1, 3);
 
 			if (currentRandomNumber == 1)
@@ -206,36 +235,23 @@ void populateList(SLList& list, int numberOfObjects)
 		carYear = randomNumber(2010, 2022);
 
 		carColor = (carColors)randomNumber(0, 4);
-		
+
 		carAvailabilityStatus = (availabilityStatus)randomNumber(0, 2);
-		
+
 		carConditionScore = (float)randomNumber(500, 1000);
-		
+
 		carPriceUSD = (float)randomNumber(8000, 25000);
-		
+
 		carRentUSD = (float)randomNumber(80, 300);
-		
+
 		rentDiscountPercentage = (float)randomNumber(0, 30);
-		
+
 		priceDiscountPercentage = (float)randomNumber(0, 20);
-		
+
 		isInsuredByCompany = (bool)randomNumber(0, 1);
 
 		list.insertEnd(CarSpec(carCompanyName, carModel, carYear, carColor,
 			carAvailabilityStatus, carConditionScore, carPriceUSD, carRentUSD,
 			rentDiscountPercentage, priceDiscountPercentage, isInsuredByCompany));
 	}
-}
-
-int main()
-{
-	srand((unsigned int)time(NULL));
-
-	SLList Test("file.bin");
-
-	populateList(Test, 100);
-
-	Test.displayAllADT();
-
-	return 0;
 }
