@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CarSpec.h" />
+    <ClInclude Include="fileHandling.h" />
     <ClInclude Include="SLList.h" />
     <ClInclude Include="SLLNode.h" />
   </ItemGroup>
